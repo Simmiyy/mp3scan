@@ -1,0 +1,40 @@
+#!/bin/bash
+# -lnsl
+#gcc -arch i386 -O3 -D__SQLITE -D__MYSQL -I/usr/include/mysql -L/usr/local/mysql/lib -Wall -lmysqlclient -lm -lz -lsqlite3 mp3_scan.c -o mp3_scan
+
+
+## Note per la compilazione del programma
+#
+# devono essere compilate nel sistema (o in qualche path nel caso da specificare) le librerie 
+#  - sqlite3
+#  - mysql-connector-c
+#  - id3lib
+#
+# Le opzioni
+#  - -D__SQLITE abilitano la compilazione delle sezioni di codice che usano la libreria sqlite
+#  - -D__MYSQL abilitano la compilazione delle sezioni di codice che usano la libreria mysql-connector
+#
+# I flag
+#  - -I... path alle directory di include delle librerie necessarie 
+#  - -L... path alle directory di libreria (lib) delle librerie necessarie
+#
+# Ottimizzazione
+# - -O3 ottimizzazione per esecuzione veloce, in alternativa puo' essere usata -O2 binario compatto
+# 
+# NOTA
+#  Le librerie dinamiche che il programma si aspetta devono essere installati nei path corretti
+#  come ad esempio /usr/local/lib o /usr/lib
+#
+# il flag -arch x86_64 e' specifico di Mac OSX per compilare il programma a 64bit, nel caso non usare.
+#
+# Lista librerie dinamiche per programma compilato in OSX
+#   Theoden:Mp3Scan Simone$ otool -L mp3_scan
+#   mp3_scan:
+#	/usr/local/lib/libid3-3.8.3.dylib (compatibility version 4.0.0, current version 4.0.0)
+#	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 125.0.0)
+#	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.3)
+#	/usr/lib/libsqlite3.dylib (compatibility version 9.0.0, current version 9.6.0)
+#	/usr/lib/libstdc++.6.dylib (compatibility version 7.0.0, current version 7.9.0)
+
+
+c++ mp3_scan.cpp -Iid3lib-3.8.3/include -o mp3_scan -Lid3lib-3.8.3/src/.libs -lid3 -O3 -D__SQLITE -D__MYSQL -Imysql-    connector-c-6.0.2/include -Lmysql-connector-c-6.0.2/libmysql -lmysqlclient -lm -lz -lsqlite3 -Wall -arch x86_64
