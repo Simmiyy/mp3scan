@@ -38,3 +38,5 @@
 
 
 c++ mp3_scan.cpp -Iid3lib-3.8.3/include -o mp3_scan -Lid3lib-3.8.3/src/.libs -lid3 -O3 -D__SQLITE -D__MYSQL -Imysql-    connector-c-6.0.2/include -Lmysql-connector-c-6.0.2/libmysql -lmysqlclient -lm -lz -lsqlite3 -Wall -arch x86_64
+#Compile for sqlite only(change whatever is after -L with ad3lib-3.8.3 path):
+#c++ mp3_scan.cpp -Iid3lib-3.8.3/include -o mp3_scan -Llibs/id3lib-3.8.3 -lid3 -O3 -D__SQLITE -lm -lz -lsqlite3 -Wall -arch x86_64
