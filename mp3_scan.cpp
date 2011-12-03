@@ -502,7 +502,11 @@ void get_tags( const char *filename, char *title, char *artist, char *album, cha
 // query infos into db
 void sql_insert( const char* Title, const char* Artist, const char* Album, const char* Year, const char* FileName, const char* Path, off_t Size ){
 
-#ifdef __MYSQL || __SQLITE
+#ifdef __MYSQL
+	static char szQuery[1024] = {'\0'};
+#endif
+
+#ifdef __SQLITE
 	static char szQuery[1024] = {'\0'};
 #endif
 
@@ -593,7 +597,11 @@ RETURNCODE CloseDBConnection(){
 // if required create the standard table 
 void create_table(){
 
-#ifdef __MYSQL || __SQLITE
+#ifdef __MYSQL
+	char szBuffer[512];
+#endif
+
+#ifdef __SQLITE
 	char szBuffer[512];
 #endif
 
