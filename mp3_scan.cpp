@@ -232,11 +232,21 @@ int main( int argc, const char* argv[] ){
 	bNoSpaceAvailable = FALSE;
 	Mp3Counter = 0;
 	strcpy( szRelativePath, "" );								// initialize the relative path string
-	
-#ifndef __MYSQL && __SQLITE
+	int mysql_check=0;
+	int sqlite_check=0;
+
+#ifndef __MYSQL
+    mysql_check=1;
+#endif
+
+#ifndef __SQLITE
+    sqlite_check=1;
+#endif
+
+if(mysql_check && sqlite_check){
 	print_message( ERROR, "Program compiled without DB support. Unable to continue.\n");
 	exit( 0 );
-#endif
+}
 
 	init();														// init all global variables
 	
@@ -503,11 +513,15 @@ void get_tags( const char *filename, char *title, char *artist, char *album, cha
 void sql_insert( const char* Title, const char* Artist, const char* Album, const char* Year, const char* FileName, const char* Path, off_t Size ){
 
 #ifdef __MYSQL
-	static char szQuery[1024] = {'\0'};
+    #ifndef szQuery
+	    static char szQuery[1024] = {'\0'};
+	#endif
 #endif
 
 #ifdef __SQLITE
-	static char szQuery[1024] = {'\0'};
+    #ifndef szQuery
+	    static char szQuery[1024] = {'\0'};
+	#endif
 #endif
 
 	switch( UseDB ){
@@ -598,11 +612,15 @@ RETURNCODE CloseDBConnection(){
 void create_table(){
 
 #ifdef __MYSQL
-	char szBuffer[512];
+    #ifndef szBuffer
+	    char szBuffer[512];
+	#endif
 #endif
 
 #ifdef __SQLITE
-	char szBuffer[512];
+    #ifndef szBuffer
+	    char szBuffer[512];
+	#endif
 #endif
 
 	switch( UseDB ){
