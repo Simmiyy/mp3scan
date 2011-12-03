@@ -327,7 +327,7 @@ void init(){
 
 	bRecursive = FALSE;
 	bVerbose = FALSE;
-	bCreateTab = FALSE;
+	bCreateTab = TRUE;
 	bFsInfo = FALSE;
 	bNoSpaceAvailable = FALSE;
 	bUseColor = FALSE;
